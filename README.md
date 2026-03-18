@@ -37,16 +37,17 @@ select:has(option[value="0"]:checked) ~ .container > div:nth-child(1) {
 - Must work in **at least one** major browser (Chrome, Firefox, Edge, Safari).
 - Must work for **any number of items from 1 to 100** (template has 100; tests may use a random count).
 - **Container width is variable** (e.g. `50%`, `756px`); number of items per row is not fixed.
-- **Submission:** Use [JSFiddle](https://jsfiddle.net/) only. Fork the [starter template](https://jsfiddle.net/eh0xqk9y/), add your CSS, and submit the link. The code in your answer must match the fiddle.
+- **Submission:** Use [JSFiddle](https://jsfiddle.net/) only. **Fork** the [starter template](https://jsfiddle.net/eh0xqk9y/) (or copy & paste it). Do **not** modify the template’s HTML or its existing CSS. Only **add** your CSS (rules that color items). Submit the link to your fork. The code in your answer must match the fiddle.
 - **Deadline:** April 13, 2026.
 - Your entry must not be written by AI.
 
 ## How to submit
 
-1. **Respect the template:** Do **not** change the template’s HTML or CSS (no edits to structure, padding, margin, size, `body`, etc.). Only **add** CSS rules that color the items (e.g. `background: red` / `background: lightblue`). Submissions that alter the template are invalid.
-2. Add your CSS (and a short description per selection if you like).
-3. Include the **full runnable code** link: `https://jsfiddle.net/...`
-4. Optionally: browser(s) your solution works in; selections you didn’t solve (and your attempt).
+1. **Use the template as-is:** Open the [starter template](https://jsfiddle.net/eh0xqk9y/), fork it (or copy & paste into a new fiddle). Do **not** change the template’s HTML or its existing CSS — only **add** CSS rules that color the items (e.g. `background: red` / `background: lightblue`). Submissions that alter the template are invalid.
+2. In the CSS panel, paste the template’s CSS (unchanged), then append your selection rules — or use the additive CSS from `submission-only.css` in this repo.
+3. Add a short description per selection if you like.
+4. Submit the **full runnable code** link: `https://jsfiddle.net/...`
+5. Optionally: browser(s) your solution works in; selections you didn’t solve (and your attempt).
 
 **Example:**
 
@@ -68,6 +69,13 @@ I was unable to solve selections #7 and #10
 - **Winner:** Anyone who solves **all** 10 selections.
 - If no one solves all, the person with the **most** solved selections wins.
 - Among winners, **special mention** for the **smallest** code (by number of properties and selector length, not character count).
+
+---
+
+---
+
+**Submission CSS (additive only)**  
+This repo includes `submission-only.css`: CSS that implements all 10 selections and is written to be **added** to the [template](https://jsfiddle.net/eh0xqk9y/) without changing the template’s HTML or existing CSS. Fork the template, then paste the template’s CSS and append the contents of `submission-only.css` (or paste `submission-only.css` after the template’s CSS in the fiddle). Same behavior and features as the full demo; valid for “How to submit”.
 
 ---
 
