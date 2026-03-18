@@ -1,6 +1,5 @@
-/* Base: 100 numbered boxes. 15–28 red, rest light blue. */
+/* Base: 100 boxes, 15–28 red, rest light blue. */
 body { margin: 0; }
-
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +7,6 @@ body { margin: 0; }
   padding: 8px;
   box-sizing: border-box;
 }
-
 .container > div {
   width: 40px;
   height: 40px;
@@ -18,39 +16,33 @@ body { margin: 0; }
   background: lightblue;
   font-size: 14px;
 }
-
 .container > div:nth-child(n+15):nth-child(-n+28) { background: red; }
 
-/* ========== SELECTIONS ========== */
-/* Each option: reset container to light blue, then color matching items red. */
+/* When any option 0–9 is selected, reset all items to light blue (must override default 15–28 red). */
+:is(
+  select:has(option[value="0"]:checked),
+  select:has(option[value="1"]:checked),
+  select:has(option[value="2"]:checked),
+  select:has(option[value="3"]:checked),
+  select:has(option[value="4"]:checked),
+  select:has(option[value="5"]:checked),
+  select:has(option[value="6"]:checked),
+  select:has(option[value="7"]:checked),
+  select:has(option[value="8"]:checked),
+  select:has(option[value="9"]:checked)
+) ~ .container > div { background: lightblue; }
 
-/* #1 — The last item */
-select:has(option[value="0"]:checked) ~ .container > div { background: lightblue; }
+/* #1 Last | #2 First 10 | #3 All except first/last */
 select:has(option[value="0"]:checked) ~ .container > div:last-child { background: red; }
-
-/* #2 — The first 10 items */
-select:has(option[value="1"]:checked) ~ .container > div { background: lightblue; }
 select:has(option[value="1"]:checked) ~ .container > div:nth-child(-n+10) { background: red; }
-
-/* #3 — All except first and last */
-select:has(option[value="2"]:checked) ~ .container > div { background: lightblue; }
 select:has(option[value="2"]:checked) ~ .container > div:not(:first-child):not(:last-child) { background: red; }
 
-/* #4 — Items with a prime number */
-select:has(option[value="3"]:checked) ~ .container > div { background: lightblue; }
+/* #4 Primes | #5 Without "5" | #6 Digit sum 8 */
 select:has(option[value="3"]:checked) ~ .container > div:is(:nth-child(2),:nth-child(3),:nth-child(5),:nth-child(7),:nth-child(11),:nth-child(13),:nth-child(17),:nth-child(19),:nth-child(23),:nth-child(29),:nth-child(31),:nth-child(37),:nth-child(41),:nth-child(43),:nth-child(47),:nth-child(53),:nth-child(59),:nth-child(61),:nth-child(67),:nth-child(71),:nth-child(73),:nth-child(79),:nth-child(83),:nth-child(89),:nth-child(97)) { background: red; }
-
-/* #5 — Items without "5" in their number */
-select:has(option[value="4"]:checked) ~ .container > div { background: lightblue; }
 select:has(option[value="4"]:checked) ~ .container > div:not(:nth-child(5)):not(:nth-child(15)):not(:nth-child(25)):not(:nth-child(35)):not(:nth-child(45)):not(:nth-child(50)):not(:nth-child(51)):not(:nth-child(52)):not(:nth-child(53)):not(:nth-child(54)):not(:nth-child(55)):not(:nth-child(56)):not(:nth-child(57)):not(:nth-child(58)):not(:nth-child(59)) { background: red; }
-
-/* #6 — Sum of digits = 8 */
-select:has(option[value="5"]:checked) ~ .container > div { background: lightblue; }
 select:has(option[value="5"]:checked) ~ .container > div:is(:nth-child(8),:nth-child(17),:nth-child(26),:nth-child(35),:nth-child(44),:nth-child(53),:nth-child(62),:nth-child(71),:nth-child(80)) { background: red; }
 
-/* #7 — First item of each row / #8 — Second row (viewport width ≈ columns; 44px per column) */
-select:has(option[value="6"]:checked) ~ .container > div { background: lightblue; }
-select:has(option[value="7"]:checked) ~ .container > div { background: lightblue; }
+/* #7 First of row / #8 Second row — viewport width ≈ columns (44px each) */
 @media (min-width: 40px) and (max-width: 83px) {
   select:has(option[value="6"]:checked) ~ .container > div:nth-child(n+1) { background: red; }
   select:has(option[value="7"]:checked) ~ .container > div:nth-child(n+2):nth-child(-n+2) { background: red; }
@@ -132,60 +124,57 @@ select:has(option[value="7"]:checked) ~ .container > div { background: lightblue
   select:has(option[value="7"]:checked) ~ .container > div:nth-child(n+21):nth-child(-n+40) { background: red; }
 }
 
-/* #9 — First half of items (exactly N items, first N/2 red) */
-select:has(option[value="8"]:checked) ~ .container > div { background: lightblue; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(2)):not(:has(> div:nth-last-child(3))) > div:nth-child(-n+1) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(4)):not(:has(> div:nth-last-child(5))) > div:nth-child(-n+2) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(6)):not(:has(> div:nth-last-child(7))) > div:nth-child(-n+3) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(8)):not(:has(> div:nth-last-child(9))) > div:nth-child(-n+4) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(10)):not(:has(> div:nth-last-child(11))) > div:nth-child(-n+5) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(12)):not(:has(> div:nth-last-child(13))) > div:nth-child(-n+6) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(14)):not(:has(> div:nth-last-child(15))) > div:nth-child(-n+7) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(16)):not(:has(> div:nth-last-child(17))) > div:nth-child(-n+8) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(18)):not(:has(> div:nth-last-child(19))) > div:nth-child(-n+9) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(20)):not(:has(> div:nth-last-child(21))) > div:nth-child(-n+10) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(22)):not(:has(> div:nth-last-child(23))) > div:nth-child(-n+11) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(24)):not(:has(> div:nth-last-child(25))) > div:nth-child(-n+12) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(26)):not(:has(> div:nth-last-child(27))) > div:nth-child(-n+13) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(28)):not(:has(> div:nth-last-child(29))) > div:nth-child(-n+14) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(30)):not(:has(> div:nth-last-child(31))) > div:nth-child(-n+15) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(32)):not(:has(> div:nth-last-child(33))) > div:nth-child(-n+16) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(34)):not(:has(> div:nth-last-child(35))) > div:nth-child(-n+17) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(36)):not(:has(> div:nth-last-child(37))) > div:nth-child(-n+18) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(38)):not(:has(> div:nth-last-child(39))) > div:nth-child(-n+19) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(40)):not(:has(> div:nth-last-child(41))) > div:nth-child(-n+20) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(42)):not(:has(> div:nth-last-child(43))) > div:nth-child(-n+21) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(44)):not(:has(> div:nth-last-child(45))) > div:nth-child(-n+22) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(46)):not(:has(> div:nth-last-child(47))) > div:nth-child(-n+23) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(48)):not(:has(> div:nth-last-child(49))) > div:nth-child(-n+24) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(50)):not(:has(> div:nth-last-child(51))) > div:nth-child(-n+25) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(52)):not(:has(> div:nth-last-child(53))) > div:nth-child(-n+26) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(54)):not(:has(> div:nth-last-child(55))) > div:nth-child(-n+27) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(56)):not(:has(> div:nth-last-child(57))) > div:nth-child(-n+28) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(58)):not(:has(> div:nth-last-child(59))) > div:nth-child(-n+29) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(60)):not(:has(> div:nth-last-child(61))) > div:nth-child(-n+30) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(62)):not(:has(> div:nth-last-child(63))) > div:nth-child(-n+31) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(64)):not(:has(> div:nth-last-child(65))) > div:nth-child(-n+32) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(66)):not(:has(> div:nth-last-child(67))) > div:nth-child(-n+33) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(68)):not(:has(> div:nth-last-child(69))) > div:nth-child(-n+34) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(70)):not(:has(> div:nth-last-child(71))) > div:nth-child(-n+35) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(72)):not(:has(> div:nth-last-child(73))) > div:nth-child(-n+36) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(74)):not(:has(> div:nth-last-child(75))) > div:nth-child(-n+37) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(76)):not(:has(> div:nth-last-child(77))) > div:nth-child(-n+38) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(78)):not(:has(> div:nth-last-child(79))) > div:nth-child(-n+39) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(80)):not(:has(> div:nth-last-child(81))) > div:nth-child(-n+40) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(82)):not(:has(> div:nth-last-child(83))) > div:nth-child(-n+41) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(84)):not(:has(> div:nth-last-child(85))) > div:nth-child(-n+42) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(86)):not(:has(> div:nth-last-child(87))) > div:nth-child(-n+43) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(88)):not(:has(> div:nth-last-child(89))) > div:nth-child(-n+44) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(90)):not(:has(> div:nth-last-child(91))) > div:nth-child(-n+45) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(92)):not(:has(> div:nth-last-child(93))) > div:nth-child(-n+46) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(94)):not(:has(> div:nth-last-child(95))) > div:nth-child(-n+47) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(96)):not(:has(> div:nth-last-child(97))) > div:nth-child(-n+48) { background: red; }
-select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(98)):not(:has(> div:nth-last-child(99))) > div:nth-child(-n+49) { background: red; }
-/* 100 items: container has ≥100 children (100th-from-last exists) */
+/* #9 First half: exactly N items → first N/2 red (even N from 2 to 100) */
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(2)):not(:has(> div:nth-last-child(3))) > div:nth-child(-n+1),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(4)):not(:has(> div:nth-last-child(5))) > div:nth-child(-n+2),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(6)):not(:has(> div:nth-last-child(7))) > div:nth-child(-n+3),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(8)):not(:has(> div:nth-last-child(9))) > div:nth-child(-n+4),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(10)):not(:has(> div:nth-last-child(11))) > div:nth-child(-n+5),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(12)):not(:has(> div:nth-last-child(13))) > div:nth-child(-n+6),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(14)):not(:has(> div:nth-last-child(15))) > div:nth-child(-n+7),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(16)):not(:has(> div:nth-last-child(17))) > div:nth-child(-n+8),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(18)):not(:has(> div:nth-last-child(19))) > div:nth-child(-n+9),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(20)):not(:has(> div:nth-last-child(21))) > div:nth-child(-n+10),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(22)):not(:has(> div:nth-last-child(23))) > div:nth-child(-n+11),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(24)):not(:has(> div:nth-last-child(25))) > div:nth-child(-n+12),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(26)):not(:has(> div:nth-last-child(27))) > div:nth-child(-n+13),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(28)):not(:has(> div:nth-last-child(29))) > div:nth-child(-n+14),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(30)):not(:has(> div:nth-last-child(31))) > div:nth-child(-n+15),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(32)):not(:has(> div:nth-last-child(33))) > div:nth-child(-n+16),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(34)):not(:has(> div:nth-last-child(35))) > div:nth-child(-n+17),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(36)):not(:has(> div:nth-last-child(37))) > div:nth-child(-n+18),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(38)):not(:has(> div:nth-last-child(39))) > div:nth-child(-n+19),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(40)):not(:has(> div:nth-last-child(41))) > div:nth-child(-n+20),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(42)):not(:has(> div:nth-last-child(43))) > div:nth-child(-n+21),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(44)):not(:has(> div:nth-last-child(45))) > div:nth-child(-n+22),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(46)):not(:has(> div:nth-last-child(47))) > div:nth-child(-n+23),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(48)):not(:has(> div:nth-last-child(49))) > div:nth-child(-n+24),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(50)):not(:has(> div:nth-last-child(51))) > div:nth-child(-n+25),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(52)):not(:has(> div:nth-last-child(53))) > div:nth-child(-n+26),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(54)):not(:has(> div:nth-last-child(55))) > div:nth-child(-n+27),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(56)):not(:has(> div:nth-last-child(57))) > div:nth-child(-n+28),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(58)):not(:has(> div:nth-last-child(59))) > div:nth-child(-n+29),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(60)):not(:has(> div:nth-last-child(61))) > div:nth-child(-n+30),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(62)):not(:has(> div:nth-last-child(63))) > div:nth-child(-n+31),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(64)):not(:has(> div:nth-last-child(65))) > div:nth-child(-n+32),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(66)):not(:has(> div:nth-last-child(67))) > div:nth-child(-n+33),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(68)):not(:has(> div:nth-last-child(69))) > div:nth-child(-n+34),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(70)):not(:has(> div:nth-last-child(71))) > div:nth-child(-n+35),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(72)):not(:has(> div:nth-last-child(73))) > div:nth-child(-n+36),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(74)):not(:has(> div:nth-last-child(75))) > div:nth-child(-n+37),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(76)):not(:has(> div:nth-last-child(77))) > div:nth-child(-n+38),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(78)):not(:has(> div:nth-last-child(79))) > div:nth-child(-n+39),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(80)):not(:has(> div:nth-last-child(81))) > div:nth-child(-n+40),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(82)):not(:has(> div:nth-last-child(83))) > div:nth-child(-n+41),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(84)):not(:has(> div:nth-last-child(85))) > div:nth-child(-n+42),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(86)):not(:has(> div:nth-last-child(87))) > div:nth-child(-n+43),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(88)):not(:has(> div:nth-last-child(89))) > div:nth-child(-n+44),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(90)):not(:has(> div:nth-last-child(91))) > div:nth-child(-n+45),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(92)):not(:has(> div:nth-last-child(93))) > div:nth-child(-n+46),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(94)):not(:has(> div:nth-last-child(95))) > div:nth-child(-n+47),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(96)):not(:has(> div:nth-last-child(97))) > div:nth-child(-n+48),
+select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(98)):not(:has(> div:nth-last-child(99))) > div:nth-child(-n+49),
 select:has(option[value="8"]:checked) ~ .container:has(> div:nth-last-child(100)) > div:nth-child(-n+50) { background: red; }
 
-/* #10 — Checkerboard (even numbers red) */
-select:has(option[value="9"]:checked) ~ .container > div { background: lightblue; }
+/* #10 Checkerboard (even numbers red) */
 select:has(option[value="9"]:checked) ~ .container > div:nth-child(even) { background: red; }
