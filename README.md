@@ -1,4 +1,4 @@
-# CSS Selectors Challenge — Temani Afif
+# The Accurate Selection — CSS Selectors Challenge (Temani Afif)
 
 Community-authored challenge. **Temani Afif** is an expert web developer and one of the most active users in the CSS tag. He’s the creator of css-loaders.com, css-generators.com, css-tip.com, css-pattern.com, and more.
 
