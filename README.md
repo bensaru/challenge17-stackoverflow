@@ -43,9 +43,10 @@ select:has(option[value="0"]:checked) ~ .container > div:nth-child(1) {
 
 ## How to submit
 
-1. Add your CSS (and a short description per selection if you like).
-2. Include the **full runnable code** link: `https://jsfiddle.net/...`
-3. Optionally: browser(s) your solution works in; selections you didn’t solve (and your attempt).
+1. **Respect the template:** Do **not** change the template’s HTML or CSS (no edits to structure, padding, margin, size, `body`, etc.). Only **add** CSS rules that color the items (e.g. `background: red` / `background: lightblue`). Submissions that alter the template are invalid.
+2. Add your CSS (and a short description per selection if you like).
+3. Include the **full runnable code** link: `https://jsfiddle.net/...`
+4. Optionally: browser(s) your solution works in; selections you didn’t solve (and your attempt).
 
 **Example:**
 

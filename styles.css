@@ -1,11 +1,9 @@
-/* Base: 100 boxes, 15–28 red, rest light blue. */
-body { margin: 0; }
+/* Base: 100 boxes, 15–28 red, rest light blue. (Template — do not alter for submission.) */
 .container {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   padding: 8px;
-  box-sizing: border-box;
 }
 .container > div {
   width: 40px;
